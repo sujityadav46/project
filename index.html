@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CET138 · Sujit Yadav · full‑stack hub</title>
+  <!-- Bootstrap 5 + icons + fonts (same modern stack) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --deep-purple: #6d28d9;      /* richer, different palette */
+      --electric-violet: #8b5cf6;
+      --warm-coral: #f97316;
+      --teal-accent: #14b8a6;
+      --bg-offwhite: #f8fafc;
+      --card-light: #ffffff;
+      --text-dark: #0f172a;
+      --text-muted: #475569;
+      --shadow-heavy: 0 25px 40px -15px rgba(109, 40, 217, 0.25);
+      --border-glow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+    }
+    body {
+      background-color: var(--bg-offwhite);
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      scroll-behavior: smooth;
+    }
+    /* ---------- new distinct UI ---------- */
+    .navbar-custom {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(16px);
+      border-bottom: 2px solid var(--electric-violet);
+      box-shadow: 0 8px 20px -10px #6d28d950;
+    }
+    .brand-logo {
+      font-weight: 800;
+      font-size: 1.8rem;
+      background: linear-gradient(145deg, #6d28d9, #f97316);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .nav-custom-link {
+      font-weight: 600;
+      border-radius: 40px;
+      padding: 0.5rem 1.3rem !important;
+      transition: 0.15s;
+    }
+    .nav-custom-link:hover {
+      background: #6d28d910;
+      color: var(--deep-purple) !important;
+    }
+    /* section heading with double underline */
+    .sec-head {
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+    .sec-head i {
+      background: linear-gradient(145deg, #f97316, #6d28d9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-right: 0.6rem;
+    }
+    .sec-head::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -12px;
+      width: 100px;
+      height: 5px;
+      background: linear-gradient(90deg, #f97316, #6d28d9, #14b8a6);
+      border-radius: 8px;
+    }
+    /* card style – different rounding, pastel borders */
+    .modern-card {
+      background: var(--card-light);
+      border-radius: 2rem 1rem 2rem 1rem;
+      padding: 2rem 1.8rem;
+      border: 1px solid #e9d5ff;
+      box-shadow: 0 10px 25px -12px #6d28d9;
+      transition: all 0.25s;
+      height: 100%;
+    }
+    .modern-card:hover {
+      border-radius: 1rem 2rem 1rem 2rem;
+      box-shadow: var(--shadow-heavy);
+      border-color: var(--electric-violet);
+    }
+    .alt-card {
+      background: linear-gradient(165deg, #fff, #f5f3ff);
+      border-radius: 1.5rem;
+      padding: 1.8rem;
+      border-left: 8px solid var(--warm-coral);
+    }
+    /* avatar fresh */
+    .avatar-new {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #6d28d9, #f97316);
+      border-radius: 24px 8px 24px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2rem;
+      font-weight: 700;
+      box-shadow: 0 15px 20px -8px #f9731670;
+    }
+    .id-pill {
+      background: #f1f5f9;
+      padding: 0.5rem 1.4rem;
+      border-radius: 60px;
+      font-weight: 600;
+      color: var(--deep-purple);
+      border: 1px dashed #cbd5e1;
+    }
+    /* tech-badge alternative */
+    .tech-pill {
+      background: #ede9fe;
+      color: #6d28d9;
+      padding: 0.3rem 1.2rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-block;
+      margin: 0.25rem 0.25rem 0.25rem 0;
+      border: 1px solid #c4b5fd;
+    }
+    /* buttons */
+    .btn-prime {
+      background: #6d28d9;
+      border: none;
+      color: white;
+      border-radius: 40px;
+      padding: 0.7rem 2rem;
+      font-weight: 600;
+      box-shadow: 0 10px 20px -5px #6d28d9;
+      transition: all 0.2s;
+    }
+    .btn-prime:hover {
+      background: #f97316;
+      transform: scale(1.02);
+      box-shadow: 0 15px 25px -8px #f97316;
+    }
+    .btn-out-coral {
+      border: 2px solid #f97316;
+      background: transparent;
+      border-radius: 40px;
+      padding: 0.5rem 1.5rem;
+      font-weight: 600;
+      color: #f97316;
+    }
+    .btn-out-coral:hover {
+      background: #f97316;
+      color: white;
+    }
+    /* code snippet style */
+    .code-block {
+      background: #1e293b;
+      color: #facc15;
+      padding: 1.2rem;
+      border-radius: 1.2rem;
+      font-size: 0.9rem;
+      font-family: monospace;
+      border-left: 6px solid #f97316;
+    }
+    /* list group new */
+    .list-item-custom {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #f3e8ff;
+      padding: 0.75rem 0;
+    }
+    /* footer rich */
+    .footer-rich {
+      background: #0f172a;
+      color: #f1f5f9;
+      border-radius: 3rem 3rem 0 0;
+      margin-top: 3rem;
+      padding: 3rem 0 1.5rem;
+    }
+    #scrollTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 55px;
+      height: 55px;
+      background: #f97316;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-size: 1.5rem;
+      display: none;
+      place-items: center;
+      box-shadow: 0 15px 25px #f97316;
+      z-index: 99;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR (different style) ===== -->
+<nav class="navbar navbar-expand-lg sticky-top py-2 navbar-custom">
+  <div class="container">
+    <a class="navbar-brand brand-logo d-flex align-items-center gap-2" href="#">
+      <i class="fas fa-crown" style="color:#f97316;"></i> <span>Sujit · CET138</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link nav-custom-link" href="#stack">FullStack</a></li>
+        <li class="nav-item"><a class="nav-link nav-custom-link" href="#htmlNew">HTML</a></li>
+        <li class="nav-item"><a class="nav-link nav-custom-link" href="#cssNew">CSS</a></li>
+        <li class="nav-item"><a class="nav-link nav-custom-link" href="#btNew">Bootstrap</a></li>
+        <li class="nav-item"><a class="nav-link nav-custom-link" href="#jsNew">JavaScript</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="pt-5 pb-4" style="margin-top: 30px;" id="home">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-7">
+        <div class="d-flex flex-wrap gap-2 mb-4">
+          <span class="tech-pill"><i class="fa-brands fa-html5 me-1"></i>HTML5</span>
+          <span class="tech-pill"><i class="fa-brands fa-css3-alt me-1"></i>CSS3</span>
+          <span class="tech-pill"><i class="fa-brands fa-js me-1"></i>ES6</span>
+          <span class="tech-pill"><i class="fa-brands fa-bootstrap me-1"></i>Bootstrap5</span>
+        </div>
+        <h1 class="display-3 fw-bolder" style="line-height: 1.2;">Build · Connect ·<br><span style="color:#6d28d9;">Deploy</span> <span style="color:#f97316;">Fullstack</span></h1>
+        <p class="lead text-secondary-emphasis">Interactive ePortfolio with your name, ID, and live code demos.</p>
+        <!-- Student identity block new style -->
+        <div class="d-flex align-items-center mt-4 p-3 alt-card gap-3">
+          <div class="avatar-new">SY</div>
+          <div>
+            <h3 class="fw-bold mb-0">Sujit Yadav</h3>
+            <span class="id-pill"><i class="far fa-id-card me-2"></i>bj03gl · CET138 (full‑stack)</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <!-- decorative tech grid (different) -->
+        <div style="background: #ffffff; border-radius: 2.5rem; padding: 1.5rem; box-shadow: var(--shadow-heavy);">
+          <div class="row g-2 text-center">
+            <div class="col-6"><div class="p-3 bg-light rounded-4"><i class="fas fa-database fa-2x" style="color:#6d28d9;"></i><br>PostgreSQL</div></div>
+            <div class="col-6"><div class="p-3 bg-light rounded-4"><i class="fab fa-node-js fa-2x" style="color:#f97316;"></i><br>Node.js</div></div>
+            <div class="col-6"><div class="p-3 bg-light rounded-4"><i class="fab fa-react fa-2x" style="color:#14b8a6;"></i><br>React</div></div>
+            <div class="col-6"><div class="p-3 bg-light rounded-4"><i class="fas fa-code fa-2x" style="color:#6d28d9;"></i><br>RESTful</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FULL STACK ===== -->
+<section id="stack" class="py-5">
+  <div class="container">
+    <h2 class="sec-head"><i class="fas fa-cubes"></i> Full‑stack Panorama</h2>
+    <div class="row g-4">
+      <div class="col-md-8">
+        <div class="modern-card">
+          <ul class="list-unstyled">
+            <li class="list-item-custom"><i class="fas fa-check-circle text-teal me-3" style="color:#14b8a6;"></i><strong>frontend:</strong> semantic HTML, advanced CSS (grid/flex), Bootstrap, JS (ES6)</li>
+            <li class="list-item-custom"><i class="fas fa-check-circle text-teal me-3" style="color:#14b8a6;"></i><strong>backend:</strong> Node/Express, Python Flask, REST APIs</li>
+            <li class="list-item-custom"><i class="fas fa-check-circle text-teal me-3" style="color:#14b8a6;"></i><strong>database:</strong> SQL (sqlite, postgres) + localStorage demos</li>
+            <li class="list-item-custom"><i class="fas fa-check-circle text-teal me-3" style="color:#14b8a6;"></i><strong>devOps:</strong> git, vercel, netlify (basics)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="modern-card d-flex flex-column align-items-center">
+          <i class="fas fa-user-astronaut fa-4x mb-3" style="color:#f97316;"></i>
+          <p class="mb-0 fw-bold">“from browser to database”</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HTML registration form (with Sujit & bj03gl) ===== -->
+<section id="htmlNew" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="sec-head"><i class="fab fa-html5" style="color:#e34f26;"></i> HTML5 · register (Sujit)</h2>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="modern-card">
+          <form onsubmit="event.preventDefault(); showSujitToast();">
+            <div class="mb-3">
+              <label class="fw-semibold">👤 Full name</label>
+              <input type="text" class="form-control rounded-pill border-2 p-3" id="fullNameSuj" value="Sujit Yadav" placeholder="Full name">
+            </div>
+            <div class="mb-3">
+              <label class="fw-semibold">📧 Email</label>
+              <input type="email" class="form-control rounded-pill border-2 p-3" id="emailSuj" value="sujit.yadav@example.org">
+            </div>
+            <div class="mb-3">
+              <label class="fw-semibold">🆔 student ID (fixed)</label>
+              <input type="text" class="form-control rounded-pill bg-light" value="bj03gl" readonly>
+            </div>
+            <div class="mb-4">
+              <label class="fw-semibold">Module</label>
+              <select class="form-select rounded-pill border-2 p-3">
+                <option>CET138 Full Stack</option>
+                <option>Frontend elective</option>
+              </select>
+            </div>
+            <button class="btn-prime w-100"><i class="far fa-bell me-2"></i>notify me (demo)</button>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="modern-card">
+          <h5 class="mb-3"><i class="fas fa-code me-2 text-warning"></i>html features</h5>
+          <pre class="code-block"><code>&lt;form&gt;
+  &lt;input value="Sujit Yadav"&gt;
+  &lt;input value="bj03gl" readonly&gt;
+  &lt;select&gt;&lt;option&gt;CET138&lt;/option&gt;&lt;/select&gt;
+&lt;/form&gt;</code></pre>
+          <p class="mt-3"><span class="badge bg-warning text-dark">semantic</span> <span class="badge bg-secondary">validation</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CSS (custom card) ===== -->
+<section id="cssNew" class="py-5">
+  <div class="container">
+    <h2 class="sec-head"><i class="fab fa-css3-alt" style="color:#1572b6;"></i> CSS · profile card</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div style="background: linear-gradient(145deg, #6d28d9, #a78bfa); border-radius: 2.5rem 1rem 2.5rem 1rem; padding: 2rem; color: white; box-shadow: 0 20px 35px #6d28d9;">
+          <div class="d-flex gap-3">
+            <div style="width:80px;height:80px;background:#f97316; border-radius: 30px 8px 30px 8px; display:grid;place-items:center; font-size:2.5rem; font-weight:800;">SY</div>
+            <div><h3>Sujit Yadav</h3><span class="badge bg-light text-dark">bj03gl · CSS3 master</span></div>
+          </div>
+          <p class="mt-3">“border radius morph, gradient, glassmorphism, and hover.”</p>
+          <div><span class="badge bg-white text-dark me-1">flex</span><span class="badge bg-white text-dark">backdrop-filter</span></div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="modern-card">
+          <h5>🎨 CSS snippet</h5>
+          <pre class="code-block mt-2"><code>.custom-card {
+  background: linear-gradient(145deg, #6d28d9, #a78bfa);
+  border-radius: 2.5rem 1rem 2.5rem 1rem;
+  transition: border-radius 0.2s;
+}
+.custom-card:hover {
+  border-radius: 1rem 2.5rem 1rem 2.5rem;
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BOOTSTRAP ===== -->
+<section id="btNew" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="sec-head"><i class="fab fa-bootstrap" style="color:#7e3af2;"></i> Bootstrap 5 · interactive</h2>
+    <div class="row">
+      <div class="col-md-7">
+        <div class="modern-card">
+          <h5>Responsive grid & accordion</h5>
+          <div class="row g-2 mb-3">
+            <div class="col-4"><div class="p-2 bg-white border rounded-3 text-center">.col-4</div></div>
+            <div class="col-4"><div class="p-2 bg-white border rounded-3 text-center">.col-4</div></div>
+            <div class="col-4"><div class="p-2 bg-white border rounded-3 text-center">.col-4</div></div>
+          </div>
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapseOne">student id: bj03gl</button></h2><div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample"><div class="accordion-body">Sujit Yadav · CET138</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="modern-card text-center">
+          <button class="btn-prime mb-2" data-bs-toggle="modal" data-bs-target="#sujitModal"><i class="fas fa-window-maximize me-2"></i>open modal (Sujit)</button>
+          <div class="modal fade" id="sujitModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">✅ Sujit Yadav (bj03gl)</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body">modal uses Bootstrap JS — ID correctly displayed</div></div></div></div>
+          <p class="mt-2">modal, accordion, grid</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== JAVASCRIPT ===== (with Sujit ids) -->
+<section id="jsNew" class="py-5">
+  <div class="container">
+    <h2 class="sec-head"><i class="fab fa-js" style="color:#f7df1e;"></i> JavaScript demos · Sujit</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="modern-card">
+          <h5>🧮 smart calc (Sujit)</h5>
+          <div class="d-flex gap-2">
+            <input id="xSuj" class="form-control" type="number" value="10">
+            <input id="ySuj" class="form-control" type="number" value="3">
+          </div>
+          <div class="my-3 d-flex gap-2 flex-wrap">
+            <button class="btn btn-out-coral btn-sm" onclick="calcSuj('add')">+</button>
+            <button class="btn btn-out-coral btn-sm" onclick="calcSuj('sub')">-</button>
+            <button class="btn btn-out-coral btn-sm" onclick="calcSuj('mul')">*</button>
+            <button class="btn btn-out-coral btn-sm" onclick="calcSuj('div')">/</button>
+          </div>
+          <p>result: <span id="resSuj" class="badge bg-dark p-3 fs-6">—</span></p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="modern-card">
+          <h5>📋 todo · local (Sujit)</h5>
+          <div class="input-group">
+            <input id="todoSujInput" class="form-control" placeholder="new task ...">
+            <button class="btn btn-prime" id="addTodoSujBtn">add</button>
+          </div>
+          <ul id="todoSujList" class="list-group mt-3"></ul>
+          <div class="mt-2 d-flex gap-2">
+            <button class="btn btn-sm btn-outline-secondary" id="clearDoneSujBtn">clear done</button>
+            <button class="btn btn-sm btn-outline-danger" id="clearAllSujBtn">all</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER (Sujit Yadav, bj03gl) ===== -->
+<footer class="footer-rich">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-7">
+        <h4><i class="fas fa-map-pin me-2" style="color:#f97316;"></i>Sujit Yadav · bj03gl</h4>
+        <p class="text-white-50">University of Sunderland · CET138 full stack ePortfolio — all client‑side demos.</p>
+      </div>
+      <div class="col-md-5 text-md-end">
+        <a href="#home" class="btn btn-outline-light rounded-pill px-4"><i class="fas fa-arrow-up me-2"></i>back to top</a>
+      </div>
+    </div>
+    <hr class="opacity-25">
+    <p class="text-center small text-white-50">© 2025 — Sujit Yadav (bj03gl) · different fresh variant</p>
+  </div>
+</footer>
+
+<button id="scrollTop"><i class="fas fa-rocket"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // ----- toast simulation for html form -----
+  function showSujitToast() {
+    const name = document.getElementById('fullNameSuj')?.value || 'Sujit Yadav';
+    alert(`🧪 demo ${name} (bj03gl) — form submitted (no storage).`);
+  }
+
+  // ----- calculator with Sujit identifiers -----
+  function calcSuj(op) {
+    const a = parseFloat(document.getElementById('xSuj').value);
+    const b = parseFloat(document.getElementById('ySuj').value);
+    const out = document.getElementById('resSuj');
+    if (isNaN(a) || isNaN(b)) { out.textContent = 'invalid'; return; }
+    let val;
+    if (op === 'add') val = a + b;
+    else if (op === 'sub') val = a - b;
+    else if (op === 'mul') val = a * b;
+    else val = (b === 0) ? '∞' : a / b;
+    out.textContent = val;
+  }
+
+  // ----- TODO (fully distinct variable names + Sujit) -----
+  (function() {
+    const STORAGE = 'todos_sujit_2025';
+    function loadTodos() { try { return JSON.parse(localStorage.getItem(STORAGE)) || []; } catch { return []; } }
+    function saveTodos(t) { localStorage.setItem(STORAGE, JSON.stringify(t)); }
+
+    function render() {
+      const ul = document.getElementById('todoSujList');
+      if (!ul) return;
+      const todos = loadTodos();
+      ul.innerHTML = '';
+      todos.forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item d-flex align-items-center';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = item.done;
+        cb.classList.add('me-2');
+        cb.addEventListener('change', () => { item.done = cb.checked; saveTodos(todos); render(); });
+        const span = document.createElement('span');
+        span.textContent = item.text;
+        span.style.flex = '1';
+        const delBtn = document.createElement('button');
+        delBtn.innerHTML = '<i class="fas fa-trash"></i>';
+        delBtn.classList.add('btn', 'btn-sm', 'btn-outline-danger');
+        delBtn.addEventListener('click', () => {
+          const idx = todos.findIndex(t => t.id === item.id);
+          if(idx !== -1) todos.splice(idx,1);
+          saveTodos(todos); render();
+        });
+        li.append(cb, span, delBtn);
+        ul.appendChild(li);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      render();
+      document.getElementById('addTodoSujBtn')?.addEventListener('click', () => {
+        const inp = document.getElementById('todoSujInput');
+        if (!inp.value.trim()) return;
+        const todos = loadTodos();
+        todos.push({ id: Date.now(), text: inp.value, done: false });
+        saveTodos(todos);
+        inp.value = '';
+        render();
+      });
+      document.getElementById('clearDoneSujBtn')?.addEventListener('click', ()=>{
+        const todos = loadTodos().filter(t => !t.done);
+        saveTodos(todos); render();
+      });
+      document.getElementById('clearAllSujBtn')?.addEventListener('click', ()=>{
+        if(confirm('erase all?')) { saveTodos([]); render(); }
+      });
+    });
+  })();
+
+  // scroll to top button
+  const topBtn = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => {
+    topBtn.style.display = window.scrollY > 500 ? 'grid' : 'none';
+  });
+  topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>
