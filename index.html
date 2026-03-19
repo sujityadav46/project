@@ -536,7 +536,7 @@
   // scroll to top button
   const topBtn = document.getElementById('scrollTop');
   window.addEventListener('scroll', () => {
-    topBtn.style.display = window.scrollY > 500 ? 'grid' : 'none';
+     topBtn.style.display = window.scrollY > 500 ? 'grid' : 'none';
   });
   topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 </script>
